@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="50">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="9">
+
+            <ImageView
+                android:id="@+id/iconLivreDetail"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:src="@drawable/algo8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="11"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Category : "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/categorieDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:minLines="3"
+                android:text="categorieDetail"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Published : "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/anneeDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 2015"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="20"
+        android:layout_weight="16">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="15"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="sqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsdsqdqsd" />
+
+        </LinearLayout>
+        </LinearLayout>
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Comment :" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="16">
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+       />
+            </LinearLayout>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5"
+
+            android:background="@drawable/messages" />
+    </LinearLayout>
+</LinearLayout>

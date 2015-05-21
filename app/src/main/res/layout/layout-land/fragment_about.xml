@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#AF1022FF">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="40">
+
+            <ImageView
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:id="@+id/imageView"
+                android:layout_gravity="center"
+                android:src="@drawable/bk"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="45"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView2" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Cette application est réalisée dans le cadre du mini-projet du mpdule &quot;Developpement mobile&quot;\n\nRealisee par :\n\n -Benali Nedjmeddine\n -Chorfi Iheb\n -Lattali Ahmed \n\n Sous l'encadrement de\n M. MOKEDDEM Hakim"
+                    android:id="@+id/textView9"
+                    android:layout_gravity="left|top"
+                    android:padding="5dp"
+                    />
+            </ScrollView>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="15">
+
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

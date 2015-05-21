@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="titre">17dp</dimen>
+    <dimen name="arrowsize">25dp</dimen>
+    <dimen name="auteur">15dip</dimen>
+    <dimen name="categorie">13dip</dimen>
+    <dimen name="annee">12dip</dimen>
+    <dimen name="titreLivreSize">22sp</dimen>
+    <dimen name="AuteurLivreSize">14sp</dimen>
+    <dimen name="infoSize">16sp</dimen>
+    <dimen name="descriptionSize">14sp</dimen>
+    <dimen name="editTextSize">10sp</dimen>
+    <dimen name="nomCommentaireSize">15sp</dimen>
+    <dimen name="dateCommentaireSize">12sp</dimen>
+    <dimen name="commentaireSize">13sp</dimen>
+</resources>

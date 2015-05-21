@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titreLivreSize">30sp</dimen>
+    <dimen name="AuteurLivreSize">20dp</dimen>
+    <dimen name="infoSize">20sp</dimen>
+    <dimen name="descriptionSize">18sp</dimen>
+    <dimen name="editTextSize">14sp</dimen>
+    <dimen name="nomCommentaireSize">16sp</dimen>
+    <dimen name="dateCommentaireSize">14sp</dimen>
+    <dimen name="commentaireSize">15sp</dimen>
+</resources>

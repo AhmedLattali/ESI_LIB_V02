@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#AF1022FF">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="40">
+
+            <ImageView
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:id="@+id/imageView"
+                android:layout_gravity="center"
+                android:src="@drawable/user"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="60">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:background="#FFFFFF"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:layout_width="287dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/editText"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:hint="E-mail" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:background="#FFFFFF"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:layout_width="287dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/editText2"
+                    android:layout_gravity="center"
+                    android:hint="Password" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15">
+
+                <Button
+                    android:layout_width="287dp"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:id="@+id/button"
+                    android:layout_gravity="center"
+                    android:background="#009688"
+                    android:textColor="#FFFFFF" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Forgot password ?"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:textColor="#FFFFFF" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</RelativeLayout>
