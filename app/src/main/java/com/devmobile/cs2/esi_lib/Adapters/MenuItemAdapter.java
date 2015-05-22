@@ -20,6 +20,7 @@ public class MenuItemAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<NavMenuItem> NavMenuItems;
     public static int index =0 ;
+
     public MenuItemAdapter(Context context, ArrayList<NavMenuItem> NavMenuItems){
         this.context = context;
         this.NavMenuItems = NavMenuItems;
@@ -82,5 +83,7 @@ public class MenuItemAdapter extends BaseAdapter{
         txtTitle.setText(NavMenuItems.get(position).getTitre());
         return convertView;
     }
+
+
 
 }

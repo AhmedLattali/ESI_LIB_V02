@@ -1,10 +1,12 @@
 package com.devmobile.cs2.esi_lib;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 
@@ -72,4 +74,15 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
 
         mTabHost.setOnTabChangedListener(this);
     }
+    public void onClickLogin(View v){
+
+        /*String pseudo = ((EditText) findViewById(R.id.editText)).getText().toString() ;
+        String mot_de_passe =  ((EditText) findViewById(R.id.editText2)).getText().toString() ;
+
+        GetUserByNomEtMPasseTask auth = new GetUserByNomEtMPasseTask(this,intent , pseudo, mot_de_passe) ;
+        auth.execute() ;*/
+        Intent intent=new Intent(this,com.devmobile.cs2.esi_lib.ListeLivres.class);
+        startActivity(intent);
+    }
+
 }

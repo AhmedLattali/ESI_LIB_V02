@@ -39,11 +39,10 @@
             <EditText
                 android:layout_width="287dp"
                 android:layout_height="fill_parent"
-                android:inputType="textEmailAddress"
                 android:ems="10"
                 android:id="@+id/editText"
                 android:layout_gravity="center_horizontal|bottom"
-                android:hint="E-mail"
+                android:hint="Pseudo"
                 android:background="#FFFFFF"
                 android:layout_margin="5dp" />
         </FrameLayout>
@@ -62,7 +61,7 @@
                 android:ems="10"
                 android:id="@+id/editText2"
                 android:layout_gravity="center_horizontal|top"
-                android:hint="Password"
+                android:hint="Mot de passe"
                 android:background="#FFFFFF"
                 android:layout_margin="5dp" />
         </FrameLayout>
@@ -80,7 +79,8 @@
                 android:layout_gravity="center"
                 android:background="@android:drawable/toast_frame"
                 android:textColor="#FFFFFF"
-                android:elevation="20dp"/>
+                android:elevation="20dp"
+                android:onClick="onClickLogin"/>
         </FrameLayout>
 
         <FrameLayout
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Forgot password ?"
+                android:text="Mot de passe oublié ?"
                 android:id="@+id/textView"
                 android:layout_gravity="center"
                 android:autoLink="web"

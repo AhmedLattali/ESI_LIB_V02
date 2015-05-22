@@ -5,27 +5,26 @@ import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.devmobile.cs2.esi_lib.Adapters.LivreAdapter;
 import com.devmobile.cs2.esi_lib.Adapters.MenuItemAdapter;
+import com.devmobile.cs2.esi_lib.AsyncTasks.LogOutTask;
+import com.devmobile.cs2.esi_lib.DataBasesHandlers.DataBaseSQLiteHandler;
 import com.devmobile.cs2.esi_lib.Models.Livre;
 import com.devmobile.cs2.esi_lib.Models.NavMenuItem;
-
-import org.apache.http.impl.io.ContentLengthInputStream;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -66,6 +65,8 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         init_data();
+
+
 
         pileFragment =new Stack<Fragment>() ;
         super.onCreate(savedInstanceState);
@@ -266,6 +267,9 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
                 fragmentListeLivres = new ListeLivresFragement();
                 fragmentListeLivres.setArguments(bundle);
                 break;
+            case 6:
+              new LogOutTask(this).execute() ;
+                break;
 
             default:
                 break;
@@ -399,7 +403,7 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         }
     }
     public  void init_data(){
-        DataBaseHandler dbh=new DataBaseHandler(this) ;
+        DataBaseSQLiteHandler dbh=new DataBaseSQLiteHandler(this) ;
         ListeLivresFragement.livre_math =dbh.getLivresByCateg("Mathématique") ;
         ListeLivresFragement.livre_elec =dbh.getLivresByCateg("Electronique") ;
         ListeLivresFragement.livre_algo =dbh.getLivresByCateg("Algorithmique") ;

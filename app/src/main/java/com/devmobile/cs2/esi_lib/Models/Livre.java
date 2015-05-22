@@ -1,7 +1,5 @@
 package com.devmobile.cs2.esi_lib.Models;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -97,11 +95,11 @@ public class Livre {
 
     public Boolean rechercheTags(String word){
 
-        Log.i("word", word) ;
+       // Log.i("word", word) ;
         for(String str : this.getTags()){
-            Log.i("word", word) ;
-            Log.i("str", str) ;
-            if(str.equals(word)){
+           // Log.i("word", word) ;
+           // Log.i("str", str) ;
+            if(str.toLowerCase().indexOf(word.toLowerCase())!=-1){
 
                 return true ;
             }
@@ -127,6 +125,7 @@ public class Livre {
     public ArrayList<String> getTags() {
         return tags;
     }
+
     public String getTagsString() {
         String stringTags =new String() ;
 
