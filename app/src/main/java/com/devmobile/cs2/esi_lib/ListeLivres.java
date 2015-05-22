@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.devmobile.cs2.esi_lib.Adapters.LivreAdapter;
 import com.devmobile.cs2.esi_lib.Adapters.MenuItemAdapter;
+import com.devmobile.cs2.esi_lib.AsyncTasks.GetLivresByQueryTask;
 import com.devmobile.cs2.esi_lib.AsyncTasks.LogOutTask;
 import com.devmobile.cs2.esi_lib.DataBasesHandlers.DataBaseSQLiteHandler;
 import com.devmobile.cs2.esi_lib.Models.Livre;
@@ -197,6 +198,9 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
     public boolean onQueryTextSubmit(String query) {
 
         ArrayList<Livre> list = filtredListBooks(query);
+        if(list.isEmpty()){
+            new GetLivresByQueryTask(this,query).execute() ;
+        }
         LivreAdapter monAdapteteur = new LivreAdapter(this,R.layout.liste_livres_range,list);
         listView = ListeLivresFragement.listLivreView ;
         listView.setAdapter(monAdapteteur);

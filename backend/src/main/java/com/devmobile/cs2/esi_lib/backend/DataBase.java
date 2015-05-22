@@ -87,6 +87,32 @@ public class DataBase {
         }
         return list;
     }
+    public List<Livre> getLivresByQuery(String queryText) {
+        List<Livre> list = new ArrayList<>();
+        String query = "select * from livre where categorie ="+queryText;
+        try {
+            Connection con = connecter();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Livre livre = new Livre();
+                livre.setId(rs.getInt(1));
+                livre.setTitre(rs.getString(2));
+                livre.setAuteur(rs.getString(3));
+                livre.setCategorie(rs.getString(4));
+                livre.setAnnee(rs.getString(5));
+                livre.setDescription(rs.getString(6));
+                // livre.setImage(rs.getBytes(7));
+                livre.setTagsFromString(rs.getString(8));
+
+                list.add(livre);
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public User getUserByNomEtMpasse(String nom , String passe) {
         User user = new User() ;
         String query = "select * from users where nom = "+nom+" and mot_de_passe = "+passe;

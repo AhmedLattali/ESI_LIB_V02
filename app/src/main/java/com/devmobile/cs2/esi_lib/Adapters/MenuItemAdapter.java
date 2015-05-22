@@ -53,7 +53,7 @@ public class MenuItemAdapter extends BaseAdapter{
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         final ImageView favoris = (ImageView) convertView.findViewById(R.id.favoris);
 
-        if(index==7){
+        if(position== 0 || position==6){
             favoris.setVisibility(View.INVISIBLE);
 
         }else{

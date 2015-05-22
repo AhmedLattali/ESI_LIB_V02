@@ -42,6 +42,17 @@
         <url-pattern>/getuserbynometmpasse</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetLivresByQueryServlet</servlet-name>
+        <servlet-class>com.devmobile.cs2.esi_lib.backend.GetLivresByQueryServlet</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>GetLivresByQueryServlet</servlet-name>
+        <url-pattern>/getlivresbyquery</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
 
         <welcome-file>index.html</welcome-file>
