@@ -24,6 +24,7 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
     private String mot_de_passe ;
     private Intent intent ;
     ProgressDialog dialog ;
+    String httpcode;
 
     public GetUserByNomEtMPasseTask(Context context, Intent intent , String nom, String mot_de_passe){
         this.context=context ;
@@ -41,21 +42,16 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
         String resultat ="{}" ;
-        if(httpGet.isAborted()){
-            resultat="error" ;
-            Toast.makeText(context, "aborted", Toast.LENGTH_LONG).show();
 
-        }
 
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet) ;
-
+            httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString() ;
 
             resultat= EntityUtils.toString(httpResponse.getEntity()) ;
-            if(httpResponse.getEntity()==null){
-                Toast.makeText(context, "null", Toast.LENGTH_LONG).show();
 
-            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,16 +69,20 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        if(!s.equals("{}")){
-            context.startActivity(intent);
+       // Toast.makeText(context, httpcode, Toast.LENGTH_LONG).show();
 
-           // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
+        if(!httpcode.equals("200")){
+            Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
+
         }
-        else{
-            if(s.equals("error")){
-                Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
 
+        else{
+            if(!s.equals("{}")){
+                context.startActivity(intent);
+
+                // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
             }
+
             else{
                 Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
 

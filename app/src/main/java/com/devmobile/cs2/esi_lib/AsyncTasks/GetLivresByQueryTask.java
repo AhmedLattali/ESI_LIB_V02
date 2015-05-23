@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.devmobile.cs2.esi_lib.Adapters.LivreAdapter;
 import com.devmobile.cs2.esi_lib.ListeLivresFragement;
@@ -32,6 +33,7 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
     private String query ;
     private ListView listView ;
     ProgressDialog dialog ;
+    String httpcode;
 
     public GetLivresByQueryTask(Context context,ListView listView, String query){
         this.context=context ;
@@ -49,7 +51,7 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
         String resultat ="" ;
        try {
             HttpResponse httpResponse = httpClient.execute(httpGet) ;
-
+           httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString() ;
             resultat= EntityUtils.toString(httpResponse.getEntity()) ;
 
         } catch (IOException e) {
@@ -61,11 +63,21 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
     @Override
     protected void onPostExecute(String s) {
 
-        Type type = new TypeToken<List<Livre>>(){}.getType();
-        ArrayList<Livre> l = new Gson().fromJson(s, type);
-        LivreAdapter monAdapteteur = new LivreAdapter(context, R.layout.liste_livres_range,l);
-        listView = ListeLivresFragement.listLivreView ;
-        listView.setAdapter(monAdapteteur);
+
+
+        if(!httpcode.equals("200")){
+            Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
+
+        }
+
+        else{
+                Type type = new TypeToken<List<Livre>>(){}.getType();
+                ArrayList<Livre> l = new Gson().fromJson(s, type);
+                LivreAdapter monAdapteteur = new LivreAdapter(context, R.layout.liste_livres_range,l);
+                listView = ListeLivresFragement.listLivreView ;
+                listView.setAdapter(monAdapteteur);
+
+        }
         dialog.dismiss();
 
     }
