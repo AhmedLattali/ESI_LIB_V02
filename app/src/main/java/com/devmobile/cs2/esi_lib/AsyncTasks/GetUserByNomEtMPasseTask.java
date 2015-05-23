@@ -40,10 +40,22 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
         String url ="http://192.168.43.131:8080/getuserbynometmpasse?nom='"+nom+"'"+"&passe='"+mot_de_passe+"'";
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
-        String resultat ="aa" ;
+        String resultat ="{}" ;
+        if(httpGet.isAborted()){
+            resultat="error" ;
+            Toast.makeText(context, "aborted", Toast.LENGTH_LONG).show();
+
+        }
+
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet) ;
+
+
             resultat= EntityUtils.toString(httpResponse.getEntity()) ;
+            if(httpResponse.getEntity()==null){
+                Toast.makeText(context, "null", Toast.LENGTH_LONG).show();
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,8 +78,15 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
 
            // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
         }
-        else {
-            Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
+        else{
+            if(s.equals("error")){
+                Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
+
+            }
+            else{
+                Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
+
+            }
         }
         dialog.dismiss();
     }

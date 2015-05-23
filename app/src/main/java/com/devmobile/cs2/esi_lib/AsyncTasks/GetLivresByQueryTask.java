@@ -46,9 +46,10 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
        String url ="http://192.168.43.131:8080/getlivresbyquery?query='"+query+"'" ;
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
-        String resultat ="aa" ;
+        String resultat ="" ;
        try {
             HttpResponse httpResponse = httpClient.execute(httpGet) ;
+
             resultat= EntityUtils.toString(httpResponse.getEntity()) ;
 
         } catch (IOException e) {
@@ -63,10 +64,9 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
         Type type = new TypeToken<List<Livre>>(){}.getType();
         ArrayList<Livre> l = new Gson().fromJson(s, type);
         LivreAdapter monAdapteteur = new LivreAdapter(context, R.layout.liste_livres_range,l);
-        dialog.dismiss();
         listView = ListeLivresFragement.listLivreView ;
         listView.setAdapter(monAdapteteur);
-
+        dialog.dismiss();
 
     }
     @Override
