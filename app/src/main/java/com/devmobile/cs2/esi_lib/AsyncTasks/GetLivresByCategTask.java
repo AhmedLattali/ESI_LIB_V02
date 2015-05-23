@@ -47,7 +47,7 @@ public class GetLivresByCategTask extends AsyncTask<Void,Void,String>{
         @Override
         protected void onPostExecute(String s) {
 
-            if(!httpcode.equals("200")){
+            if(httpcode==null || !httpcode.equals("200")){
                 Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
 
             }

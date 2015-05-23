@@ -65,7 +65,7 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
 
 
 
-        if(!httpcode.equals("200")){
+        if(httpcode==null || !httpcode.equals("200")){
             Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
 
         }
