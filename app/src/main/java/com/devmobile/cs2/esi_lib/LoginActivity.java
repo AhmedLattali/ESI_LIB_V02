@@ -76,11 +76,12 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
     }
     public void onClickLogin(View v){
 
-        /*String pseudo = ((EditText) findViewById(R.id.editText)).getText().toString() ;
+      /*  String pseudo = ((EditText) findViewById(R.id.editText)).getText().toString() ;
         String mot_de_passe =  ((EditText) findViewById(R.id.editText2)).getText().toString() ;
 
         GetUserByNomEtMPasseTask auth = new GetUserByNomEtMPasseTask(this,intent , pseudo, mot_de_passe) ;
         auth.execute() ;*/
+
         Intent intent=new Intent(this,com.devmobile.cs2.esi_lib.ListeLivres.class);
         startActivity(intent);
     }

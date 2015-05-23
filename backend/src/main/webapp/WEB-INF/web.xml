@@ -28,7 +28,7 @@
 
     <servlet-mapping>
         <servlet-name>GetLivresByCategServlet</servlet-name>
-        <url-pattern>/getlivrebycateg</url-pattern>
+        <url-pattern>/getlivresbycateg</url-pattern>
     </servlet-mapping>
 
     <servlet>

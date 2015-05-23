@@ -89,7 +89,10 @@ public class DataBase {
     }
     public List<Livre> getLivresByQuery(String queryText) {
         List<Livre> list = new ArrayList<>();
-        String query = "select * from livre where categorie ="+queryText;
+        String query = "SELECT * FROM  `livre` WHERE " +
+                "titre LIKE CONCAT(  '%',  "+queryText+",  '%' ) or  " +
+                "auteur LIKE CONCAT(  '%',  "+queryText+",  '%' ) or " +
+                "tags LIKE CONCAT(  '%',  "+queryText+",  '%' ) ";
         try {
             Connection con = connecter();
             Statement st = con.createStatement();
@@ -102,7 +105,7 @@ public class DataBase {
                 livre.setCategorie(rs.getString(4));
                 livre.setAnnee(rs.getString(5));
                 livre.setDescription(rs.getString(6));
-                // livre.setImage(rs.getBytes(7));
+                livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
 
                 list.add(livre);

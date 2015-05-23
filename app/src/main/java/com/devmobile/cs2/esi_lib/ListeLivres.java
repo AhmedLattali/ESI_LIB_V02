@@ -199,7 +199,7 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
 
         ArrayList<Livre> list = filtredListBooks(query);
         if(list.isEmpty()){
-            new GetLivresByQueryTask(this,query).execute() ;
+            new GetLivresByQueryTask(this,listView,query).execute() ;
         }
         LivreAdapter monAdapteteur = new LivreAdapter(this,R.layout.liste_livres_range,list);
         listView = ListeLivresFragement.listLivreView ;
@@ -317,7 +317,7 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
-        searchView.setQueryHint("    Titre, Tages");
+        searchView.setQueryHint("Titre,Auteur,Tages");
 
         return super.onCreateOptionsMenu(menu);
     }

@@ -28,7 +28,7 @@ public class GetLivresByCategTask extends AsyncTask<Void,Void,String>{
         @Override
         protected String doInBackground(Void... params) {
             //Emulateur
-            String url ="http://192.168.131.43:8080/getlivrebycateg?categ='"+categ+"'" ;
+            String url ="http://192.168.43.131:8080/getlivrebycateg?categ='"+categ+"'" ;
             HttpClient httpClient =new DefaultHttpClient() ;
             HttpGet httpGet = new HttpGet(url) ;
             String resultat ="aa" ;

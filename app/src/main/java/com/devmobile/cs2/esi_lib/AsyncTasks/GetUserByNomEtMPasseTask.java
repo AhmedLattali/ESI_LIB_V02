@@ -63,12 +63,13 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String s) {
         if(!s.equals("{}")){
             context.startActivity(intent);
-            dialog.dismiss();
+
            // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
         }
+        dialog.dismiss();
     }
 
 
