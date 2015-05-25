@@ -134,5 +134,67 @@ public class DataBase {
         }
         return user ;
     }
+    public Livre getLivreById(int id_livre){
+        Livre livre=new Livre();
+        String query = "SELECT * FROM  `livre` WHERE " +
+                "id="+id_livre+";";
+        try {
+            Connection con = connecter();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                livre.setId(rs.getInt(1));
+                livre.setTitre(rs.getString(2));
+                livre.setAuteur(rs.getString(3));
+                livre.setCategorie(rs.getString(4));
+                livre.setAnnee(rs.getString(5));
+                livre.setDescription(rs.getString(6));
+                livre.setImage(rs.getBytes(7));
+                livre.setTagsFromString(rs.getString(8));
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return livre;
+    }
+    public void marquerLu(String nom_user,int id_livre){
+        String query = "insert into est_consule_par(id,nom) values("+id_livre+","+nom_user+")";
+        try {
+            Connection con = connecter();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public List<Livre> getNewsLivres(String nom_user){
+        List<Livre> list = new ArrayList<>();
+        String query = "select * from livre where id not in (select id " +
+                "from est_consule_par where nom='"+nom_user+"');";
+        try {
+            Connection con = connecter();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Livre livre=new Livre();
+                livre.setId(rs.getInt(1));
+                livre.setTitre(rs.getString(2));
+                livre.setAuteur(rs.getString(3));
+                livre.setCategorie(rs.getString(4));
+                livre.setAnnee(rs.getString(5));
+                livre.setDescription(rs.getString(6));
+                livre.setImage(rs.getBytes(7));
+                livre.setTagsFromString(rs.getString(8));
+                list.add(livre);
+                marquerLu(nom_user,livre.getId());
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
 
