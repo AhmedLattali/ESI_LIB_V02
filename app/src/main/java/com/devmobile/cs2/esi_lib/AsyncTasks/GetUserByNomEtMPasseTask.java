@@ -24,6 +24,7 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
     private String mot_de_passe ;
     private Intent intent ;
     ProgressDialog dialog ;
+    String httpcode;
 
     public GetUserByNomEtMPasseTask(Context context, Intent intent , String nom, String mot_de_passe){
         this.context=context ;
@@ -40,10 +41,17 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
         String url ="http://192.168.43.131:8080/getuserbynometmpasse?nom='"+nom+"'"+"&passe='"+mot_de_passe+"'";
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
-        String resultat ="aa" ;
+        String resultat ="{}" ;
+
+
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet) ;
+            httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString() ;
+
             resultat= EntityUtils.toString(httpResponse.getEntity()) ;
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,14 +69,26 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        if(!s.equals("{}")){
-            context.startActivity(intent);
-            dialog.dismiss();
-           // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, httpcode, Toast.LENGTH_LONG).show();
+
+        if(httpcode==null || !httpcode.equals("200")){
+            Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
+
         }
-        else {
-            Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
+
+        else{
+            if(!s.equals("{}")){
+                context.startActivity(intent);
+
+                // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
+            }
+
+            else{
+                Toast.makeText(context, "Pseudo ou mot de passe incorrect", Toast.LENGTH_LONG).show();
+
+            }
         }
+        dialog.dismiss();
     }
 
 

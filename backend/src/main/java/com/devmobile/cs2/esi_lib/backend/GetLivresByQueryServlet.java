@@ -21,6 +21,7 @@ public class GetLivresByQueryServlet extends HttpServlet  {
         String query = req.getParameter("query") ;
         List<Livre> list =dataBase.getLivresByQuery(query) ;
         Gson gson =new Gson() ;
+
         resp.getWriter().print(gson.toJson(list)) ;
     }
 }
