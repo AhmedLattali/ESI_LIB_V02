@@ -64,6 +64,15 @@
         <url-pattern>/getnewlivres</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RateLivre</servlet-name>
+        <servlet-class>com.devmobile.cs2.esi_lib.backend.RateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RateLivre</servlet-name>
+        <url-pattern>/rateLivre</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
 

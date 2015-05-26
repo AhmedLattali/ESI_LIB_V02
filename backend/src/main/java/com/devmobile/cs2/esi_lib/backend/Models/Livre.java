@@ -2,9 +2,6 @@ package com.devmobile.cs2.esi_lib.backend.Models;
 
 import java.util.ArrayList;
 
-/**
- * Created by Ahmed-PC on 21-05-2015.
- */
 public class Livre {
 
     private int id ;
@@ -186,6 +183,4 @@ public class Livre {
     public void setId(int id) {
         this.id = id;
     }
-
 }
-

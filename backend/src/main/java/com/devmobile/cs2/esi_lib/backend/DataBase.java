@@ -202,5 +202,18 @@ public class DataBase {
         }
         return list;
     }
+    public void rateLivre(int idLivre,float rating){
+        Livre livre=getLivreById(idLivre);
+        float newRaing=(livre.getRating()*livre.getNbr_rating()+rating)/(livre.getNbr_rating()+1);
+        String query="update livre set 'rating'= "+newRaing+",'nbr_rating'= "+livre.getNbr_rating()+1+";";
+        try {
+            Connection con = connecter();
+            Statement st = con.createStatement();
+            st.executeQuery(query);
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
