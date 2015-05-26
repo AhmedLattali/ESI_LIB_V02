@@ -184,7 +184,7 @@ public class DataBase {
                 livre.setCategorie(rs.getString(4));
                 livre.setAnnee(rs.getString(5));
                 livre.setDescription(rs.getString(6));
-               // livre.setImage(rs.getBytes(7));
+                livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
                 list.add(livre);
                 marquerLu(con, nom_user,livre.getId());
