@@ -21,7 +21,7 @@ public class GetLivresByCategServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DataBase dataBase =new DataBase() ;
         String userName = req.getParameter("nom") ;
-        List<Livre> list =dataBase.getNewsLivres(userName);
+        List<Livre> list =dataBase.getNewLivres(userName);
         Gson gson =new Gson() ;
         resp.getWriter().print(gson.toJson(list)) ;
     }
