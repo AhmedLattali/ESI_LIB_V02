@@ -80,6 +80,8 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
 
         setContentView(R.layout.activity_liste_livres);
 
+
+
         mTitle = mDrawerTitle = getTitle();
 
         // load slide menu items

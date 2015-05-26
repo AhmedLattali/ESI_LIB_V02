@@ -2,8 +2,6 @@ package com.devmobile.cs2.esi_lib;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +13,9 @@ import android.widget.ListView;
 import com.devmobile.cs2.esi_lib.Adapters.LivreAdapter;
 import com.devmobile.cs2.esi_lib.Models.Livre;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ListeLivresFragement extends Fragment  {
-
-
 
     public  static ArrayList<Livre> livre_math;
     public static   ArrayList<Livre>  livre_elec;
@@ -30,6 +24,7 @@ public class ListeLivresFragement extends Fragment  {
     public static  ArrayList<Livre>  livre_si;
     //private static Livre[] livre_tous;
     public static ArrayList<Livre> livre_affiche ;
+
    // private Livre[] livre_affiche;
     private int numCateg = 0;
     public View fragmentView;
@@ -45,6 +40,7 @@ public class ListeLivresFragement extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
