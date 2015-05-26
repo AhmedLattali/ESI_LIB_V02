@@ -52,7 +52,8 @@ public class DataBase {
                 livre.setDescription(rs.getString(6));
                 // livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
-
+                livre.setRating(rs.getFloat(9));
+                livre.setNbr_rating(rs.getInt(10));
                 list.add(livre);
             }
             con.close();
@@ -78,7 +79,8 @@ public class DataBase {
                 livre.setDescription(rs.getString(6));
                 // livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
-
+                livre.setRating(rs.getFloat(9));
+                livre.setNbr_rating(rs.getInt(10));
                 list.add(livre);
             }
             con.close();
@@ -107,7 +109,8 @@ public class DataBase {
                 livre.setDescription(rs.getString(6));
                 livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
-
+                livre.setRating(rs.getFloat(9));
+                livre.setNbr_rating(rs.getInt(10));
                 list.add(livre);
             }
             con.close();
@@ -151,6 +154,8 @@ public class DataBase {
                 livre.setDescription(rs.getString(6));
                 livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
+                livre.setRating(rs.getFloat(9));
+                livre.setNbr_rating(rs.getInt(10));
             }
             con.close();
         } catch (SQLException e) {
@@ -186,6 +191,8 @@ public class DataBase {
                 livre.setDescription(rs.getString(6));
                 livre.setImage(rs.getBytes(7));
                 livre.setTagsFromString(rs.getString(8));
+                livre.setRating(rs.getFloat(9));
+                livre.setNbr_rating(rs.getInt(10));
                 list.add(livre);
                 marquerLu(con, nom_user,livre.getId());
             }
