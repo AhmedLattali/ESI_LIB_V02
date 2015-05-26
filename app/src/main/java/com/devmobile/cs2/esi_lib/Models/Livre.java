@@ -1,10 +1,6 @@
 package com.devmobile.cs2.esi_lib.Models;
 
 import java.util.ArrayList;
-
-/**
- * Created by Ahmed-PC on 10-04-2015.
- */
 public class Livre {
 
     private int id ;
@@ -16,11 +12,30 @@ public class Livre {
     private String description;
     private byte[] image;
     private ArrayList<String> tags ;
+    private float rating ;
+    private int nbr_rating ;
+
     public Livre(){
 
     }
 
-    public Livre(byte[] image ,String titre,String auteur,String categorie,String annee,String description, ArrayList<String> tags){
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public int getNbr_rating() {
+        return nbr_rating;
+    }
+
+    public void setNbr_rating(int nbr_rating) {
+        this.nbr_rating = nbr_rating;
+    }
+
+    public Livre(byte[] image ,String titre,String auteur,String categorie,String annee,String description, ArrayList<String> tags,float rating,int nbr_rating){
 
         this.image = image;
         this.titre = titre;
@@ -29,6 +44,8 @@ public class Livre {
         this.annee=annee;
         this.description = description;
         this.setTags(tags);
+        this.rating=rating ;
+        this.nbr_rating=nbr_rating;
 
     }
 
@@ -95,10 +112,10 @@ public class Livre {
 
     public Boolean rechercheTags(String word){
 
-       // Log.i("word", word) ;
+        // Log.i("word", word) ;
         for(String str : this.getTags()){
-           // Log.i("word", word) ;
-           // Log.i("str", str) ;
+            // Log.i("word", word) ;
+            // Log.i("str", str) ;
             if(str.toLowerCase().indexOf(word.toLowerCase())!=-1){
 
                 return true ;
@@ -153,7 +170,7 @@ public class Livre {
         this.tags=new ArrayList<String>() ;
         for(String word : words){
             this.tags.add(word) ;
-         }
+        }
 
 
     }

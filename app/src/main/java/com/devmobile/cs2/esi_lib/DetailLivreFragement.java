@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class DetailLivreFragement extends Fragment {
     private String categorie;
     private String annee;
     private String description;
+    private RatingBar ratingBar;
+
     ImageView iconLivre;
     TextView titreLivre;
     TextView auteurLivre;
@@ -75,7 +78,7 @@ public class DetailLivreFragement extends Fragment {
             descriptionLivre = (TextView) v.findViewById(R.id.description);
             ajouterCommentaire = (ImageButton) v.findViewById(R.id.ajouterCommentaire);
             infoLivre = (LinearLayout) v.findViewById(R.id.infoLivre);
-
+            ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
             Bitmap imageBitmap = BitmapFactory.decodeStream(imageStream);
             iconLivre.setImageBitmap(imageBitmap);
@@ -92,6 +95,17 @@ public class DetailLivreFragement extends Fragment {
             descriptionLivre.setText(description);
 
             listCommentaire = (LinearLayout) v.findViewById(R.id.listCommentaire);
+
+            /*Listener sur le changement de l'état du rating */
+
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                public void onRatingChanged(RatingBar ratingBar, float rating,
+                                            boolean fromUser) {
+
+
+                }
+            });
+
 
             ajouterCommentaire.setOnClickListener(new View.OnClickListener() {
 
