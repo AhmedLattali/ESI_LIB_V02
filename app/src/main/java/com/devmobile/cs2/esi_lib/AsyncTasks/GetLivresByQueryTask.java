@@ -45,7 +45,7 @@ public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
     @Override
     protected String doInBackground(Void... params) {
         //Emulateur
-       String url ="http://192.168.43.131:8080/getlivresbyquery?query='"+query+"'" ;
+       String url ="http://192.168.1.2:8080/getlivresbyquery?query='"+query+"'" ;
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
         String resultat ="" ;

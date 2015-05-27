@@ -45,7 +45,7 @@ public class MenuItemAdapter extends BaseAdapter {
         return position;
     }
 
-    public void saveCategory(String category,boolean valeur) {
+    public void saveCategory(String category, boolean valeur) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("CategoryLivres", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -67,28 +67,11 @@ public class MenuItemAdapter extends BaseAdapter {
         SharedPreferences sharedPreferences = context.getSharedPreferences("CategoryLivres", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.putBoolean(category, false);
-
-
-    }
-
-/*
-    public Set<String> load() {
-        HashSet<String> chaine = new HashSet<String>();
-        Set<String> chaineSaved = getSavedCategory();
-
-        if (chaineSaved != null) {
-            chaine.addAll(getSavedCategory());
-            Toast.makeText(context, chaine.toString().replace("[", "").replace("]", ""), Toast.LENGTH_LONG).show();
-            return chaineSaved;
-
-        } else {
-            Toast.makeText(context, "Aucun texte sauvgarder ", Toast.LENGTH_SHORT).show();
-            return new HashSet<String>();
-        }
+        editor.putBoolean(category, false);
+        editor.commit();
 
     }
-*/
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -107,7 +90,7 @@ public class MenuItemAdapter extends BaseAdapter {
 
         } else {
 
-          boolean categorySelected = getSavedCategory(NavMenuItems.get(positionTxt).getTitre());
+            boolean categorySelected = getSavedCategory(NavMenuItems.get(positionTxt).getTitre());
 
             if (categorySelected) {
 
@@ -126,10 +109,10 @@ public class MenuItemAdapter extends BaseAdapter {
 
                     if (!categorySelected) {
 
-                        Log.e("categAdd",NavMenuItems.get(positionTxt).getTitre());
+                        Log.e("categAdd", NavMenuItems.get(positionTxt).getTitre());
                         favoris.setImageResource(R.drawable.ic_favorite_full_pressed);
 
-                        saveCategory(NavMenuItems.get(positionTxt).getTitre(),true);
+                        saveCategory(NavMenuItems.get(positionTxt).getTitre(), true);
 
                         //                 v.setTag(R.drawable.ic_favorite_full_pressed);
 
