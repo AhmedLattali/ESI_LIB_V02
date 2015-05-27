@@ -16,9 +16,9 @@ public class DataBase {
 
     public static final String className = "com.mysql.jdbc.Driver";
     public static final String chaine
-            = "jdbc:mysql://localhost:3306/bibliodb_server";
-    static final String username = "root";
-    static final String password = "";
+            = "jdbc:mysql://sql5.freemysqlhosting.net:3306/sql578764";
+    static final String username = "sql578764";
+    static final String password = "jR2!jC5%";
 
     public Connection connecter() {
         Connection con = null;
@@ -205,7 +205,7 @@ public class DataBase {
     public void rateLivre(int idLivre,float rating){
         Livre livre=getLivreById(idLivre);
         float newRaing=(livre.getRating()*livre.getNbr_rating()+rating)/(livre.getNbr_rating()+1);
-        String query="update livre set rating= "+newRaing+",nbr_rating= "+livre.getNbr_rating()+1+" where id= "+idLivre+";";
+        String query="update livre set rating= "+newRaing+",nbr_rating= "+(livre.getNbr_rating()+1)+" where id= "+idLivre+";";
 
         System.out.println(query);
 
