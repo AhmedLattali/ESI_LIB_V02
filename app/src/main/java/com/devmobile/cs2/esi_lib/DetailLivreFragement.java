@@ -1,15 +1,18 @@
 package com.devmobile.cs2.esi_lib;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -19,11 +22,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devmobile.cs2.esi_lib.AsyncTasks.RatingTask;
+
 import java.io.ByteArrayInputStream;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class DetailLivreFragement extends Fragment {
+public class DetailLivreFragement extends Fragment  {
 
     private byte[] image;
     private String titre;
@@ -32,6 +37,7 @@ public class DetailLivreFragement extends Fragment {
     private String annee;
     private String description;
     private RatingBar ratingBar;
+    private int id;
 
     ImageView iconLivre;
     TextView titreLivre;
@@ -43,6 +49,7 @@ public class DetailLivreFragement extends Fragment {
     private LinearLayout listCommentaire, infoLivre;
     ScrollView scrollView;
     ImageButton ajouterCommentaire;
+    Button ratingButton;
 
     public DetailLivreFragement() {
         // Required empty public constructor
@@ -67,6 +74,7 @@ public class DetailLivreFragement extends Fragment {
             categorie = getArguments().getString("categorie");
             annee = getArguments().getString("annee");
             description = getArguments().getString("description");
+            id = getArguments().getInt("id");
             commentaire = (EditText) v.findViewById(R.id.commentaire);
             scrollView = (ScrollView) v.findViewById(R.id.scrollView);
             /// Affichage du data sur l'interface
@@ -79,6 +87,7 @@ public class DetailLivreFragement extends Fragment {
             ajouterCommentaire = (ImageButton) v.findViewById(R.id.ajouterCommentaire);
             infoLivre = (LinearLayout) v.findViewById(R.id.infoLivre);
             ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+            ratingButton = (Button) v.findViewById(R.id.ratingButton);
             ByteArrayInputStream imageStream = new ByteArrayInputStream(image);
             Bitmap imageBitmap = BitmapFactory.decodeStream(imageStream);
             iconLivre.setImageBitmap(imageBitmap);
@@ -96,16 +105,16 @@ public class DetailLivreFragement extends Fragment {
 
             listCommentaire = (LinearLayout) v.findViewById(R.id.listCommentaire);
 
-            /*Listener sur le changement de l'état du rating */
+           ratingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                public void onRatingChanged(RatingBar ratingBar, float rating,
-                                            boolean fromUser) {
+                    Log.e("rate", "dkholt");
 
+                    new RatingTask(getActivity().getBaseContext(), "rating=" + ratingBar.getRating() + "&idLivre=" + id).execute();
 
                 }
             });
-
 
             ajouterCommentaire.setOnClickListener(new View.OnClickListener() {
 
@@ -117,7 +126,9 @@ public class DetailLivreFragement extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+
                     String commentToAdd = commentaire.getText().toString();
+
                     if (commentToAdd.equals("")) {
                         Toast.makeText(getActivity().getBaseContext(), "Aucun commentaire à ajouter", Toast.LENGTH_SHORT);
                     } else {
@@ -156,6 +167,37 @@ public class DetailLivreFragement extends Fragment {
         return v;
     }
 
+
+    public interface OnFragmentInteractionListener {
+        public void showDrawerToggle(boolean showDrawerToggle);
+    }
+
+    private OnFragmentInteractionListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            this.mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (ListeLivres.isPhone || !ListeLivres.isLand)
+            mListener.showDrawerToggle(false);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener.showDrawerToggle(true);
+    }
+
     private void overrideFonts(final View v, Typeface tf) {
         try {
             if (v instanceof ViewGroup) {
@@ -170,4 +212,5 @@ public class DetailLivreFragement extends Fragment {
         } catch (Exception e) {
         }
     }
+
 }

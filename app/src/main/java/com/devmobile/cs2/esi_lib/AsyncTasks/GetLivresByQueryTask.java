@@ -20,72 +20,87 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Ahmed-PC on 22-05-2015.
  */
-public class GetLivresByQueryTask extends AsyncTask<Void,Void,String> {
+public class GetLivresByQueryTask extends AsyncTask<Void, Void, String> {
 
-    private Context context ;
-    private String query ;
-    private ListView listView ;
-    ProgressDialog dialog ;
+    private Context context;
+    private String query;
+    private ListView listView;
+    ProgressDialog dialog;
     String httpcode;
 
-    public GetLivresByQueryTask(Context context,ListView listView, String query){
-        this.context=context ;
-        this.query=query ;
-        this.listView = listView ;
+    public GetLivresByQueryTask(Context context, ListView listView, String query) {
+        this.context = context;
+        this.query = query;
+        this.listView = listView;
     }
 
 
     @Override
     protected String doInBackground(Void... params) {
         //Emulateur
-       String url ="http://192.168.1.2:8080/getlivresbyquery?query='"+query+"'" ;
-        HttpClient httpClient =new DefaultHttpClient() ;
-        HttpGet httpGet = new HttpGet(url) ;
-        String resultat ="" ;
-       try {
-            HttpResponse httpResponse = httpClient.execute(httpGet) ;
-           httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString() ;
-            resultat= EntityUtils.toString(httpResponse.getEntity()) ;
+        String url = null;
+        try {
+            url = "http://192.168.1.2:8080/getlivresbyquery?query='" + URLEncoder.encode(query, "UTF-8") + "'";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+        String resultat = "";
+        try {
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString();
+            resultat = EntityUtils.toString(httpResponse.getEntity());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return resultat ;
+        return resultat;
     }
 
     @Override
     protected void onPostExecute(String s) {
 
-
-
-        if(httpcode==null || !httpcode.equals("200")){
+        if (httpcode == null || !httpcode.equals("200")) {
             Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
 
-        }
-
-        else{
-                Type type = new TypeToken<List<Livre>>(){}.getType();
-                ArrayList<Livre> l = new Gson().fromJson(s, type);
-                LivreAdapter monAdapteteur = new LivreAdapter(context, R.layout.liste_livres_range,l);
-                listView = ListeLivresFragement.listLivreView ;
+        } else {
+            Type type = new TypeToken<List<Livre>>() {
+            }.getType();
+            ArrayList<Livre> l = new Gson().fromJson(s, type);
+            if (!l.isEmpty()) {
+                LivreAdapter monAdapteteur = new LivreAdapter(context, R.layout.liste_livres_range, l);
+                listView = ListeLivresFragement.listLivreView;
                 listView.setAdapter(monAdapteteur);
+            } else {
+                Toast.makeText(context, "   Pas de resultat  ", Toast.LENGTH_LONG).show();
+            }
+
 
         }
-        dialog.dismiss();
+       dialog.dismiss();
 
     }
+
+
+
     @Override
     protected void onPreExecute() {
         dialog = new ProgressDialog(context);
         dialog.setMessage(" Recherche en cours ...");
         dialog.show();
     }
+
 
 }

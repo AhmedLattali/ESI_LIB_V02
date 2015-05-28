@@ -2,6 +2,7 @@ package com.devmobile.cs2.esi_lib;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,12 @@ import android.widget.ListView;
 
 import com.devmobile.cs2.esi_lib.Adapters.LivreAdapter;
 import com.devmobile.cs2.esi_lib.Models.Livre;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListeLivresFragement extends Fragment  {
 
@@ -53,6 +58,11 @@ public class ListeLivresFragement extends Fragment  {
         return fragmentView;
     }
 
+    public boolean getSavedCategory(String category) {
+
+        return getActivity().getSharedPreferences("CategoryLivres", Context.MODE_PRIVATE).getBoolean(category, false);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -62,8 +72,40 @@ public class ListeLivresFragement extends Fragment  {
         searchView.setSubmitButtonEnabled(false);*/
 
         switch (numCateg) {
+            case -1:
+                Type type = new TypeToken<List<Livre>>(){}.getType();
+                livre_affiche = new Gson().fromJson(getArguments().getString("gson"), type);
+
+                break ;
             case 0:
-                livre_affiche =  livre_si ;
+                if(getSavedCategory("Mathèmatique")){
+                    livre_affiche = livre_math ;
+                }
+                else{
+                    if(getSavedCategory("Base de données")){
+                        livre_affiche = livre_base ;
+                    }else{
+                        if(getSavedCategory("Algorithmique")){
+                            livre_affiche = livre_algo ;
+                        }
+                        else {
+                            if(getSavedCategory("Système d'information")){
+                                livre_affiche = livre_si ;
+                            }
+                            else{
+                                if(getSavedCategory("Electronique")){
+                                    livre_affiche = livre_elec ;
+                                }
+                                else {
+                                    livre_affiche = livre_math ;
+                                }
+
+                            }
+                        }
+                    }
+                }
+                // livre_affiche = livre_math ;
+
                 break;
             case 1:
                 livre_affiche = livre_math ;
@@ -108,6 +150,7 @@ public class ListeLivresFragement extends Fragment  {
             bundle.putString("categorie", livre_affiche.get(position).getCategorie());
             bundle.putString("annee", livre_affiche.get(position).getAnnee());
             bundle.putString("description", livre_affiche.get(position).getDescription());
+            bundle.putInt("id", livre_affiche.get(position).getId());
             ListeLivres.fragmentDetailLivre = new DetailLivreFragement();
             ListeLivres.fragmentDetailLivre.setArguments(bundle);
             if (ListeLivres.fragmentDetailLivre != null) {

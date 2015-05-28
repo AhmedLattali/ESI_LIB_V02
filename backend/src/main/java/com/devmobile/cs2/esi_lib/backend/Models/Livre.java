@@ -100,7 +100,7 @@ public class Livre {
         this.description = description;
     }
 
-    public boolean rechercheMotClÃ©(String word){
+    public boolean rechercheMotClé(String word){
         if (this.titre.toLowerCase().indexOf(word.toLowerCase()) != -1
                 || this.categorie.toLowerCase().indexOf(word.toLowerCase()) != -1
                 || this.auteur.toLowerCase().indexOf(word.toLowerCase()) != -1
@@ -124,12 +124,12 @@ public class Livre {
         }
         return  false ;
     }
-    public boolean rechercheMotsClÃ©(String sentence){
+    public boolean rechercheMotsClé(String sentence){
         String[] words = sentence.split("\\s+");
         boolean bool = true;
         int i=0;
         while (i<words.length && bool==true){
-            if (this.rechercheMotClÃ©(words[i])==false) {
+            if (this.rechercheMotClé(words[i])==false) {
                 bool=false;
             }
             else {

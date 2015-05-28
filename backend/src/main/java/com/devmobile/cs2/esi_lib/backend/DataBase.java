@@ -89,6 +89,7 @@ public class DataBase {
         }
         return list;
     }
+
     public List<Livre> getLivresByQuery(String queryText) {
         List<Livre> list = new ArrayList<>();
         String query = "SELECT * FROM  `livre` WHERE " +
@@ -96,9 +97,11 @@ public class DataBase {
                 "auteur LIKE CONCAT(  '%',  "+queryText+",  '%' ) or " +
                 "tags LIKE CONCAT(  '%',  "+queryText+",  '%' ) ";
         try {
+
             Connection con = connecter();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
+
             while (rs.next()) {
                 Livre livre = new Livre();
                 livre.setId(rs.getInt(1));

@@ -1,9 +1,12 @@
 package com.devmobile.cs2.esi_lib;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -28,12 +31,11 @@ import com.devmobile.cs2.esi_lib.Models.Livre;
 import com.devmobile.cs2.esi_lib.Models.NavMenuItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Stack;
 
 
-public class ListeLivres extends ActionBarActivity implements SearchView.OnQueryTextListener {
-
-
+public class ListeLivres extends ActionBarActivity implements SearchView.OnQueryTextListener, DetailLivreFragement.OnFragmentInteractionListener {
 
 
     private DrawerLayout mDrawerLayout;
@@ -57,21 +59,27 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
     public static Fragment fragmentListeLivres;
     public static Fragment fragmentDetailLivre;
     FragmentManager fragmentManager = getFragmentManager();
+    public static boolean canReturn = false;
+
 
     private SearchView searchView;
-    private ArrayList<Livre> livre_affiche ;
-    private ListView listView ;
-    public static Stack<Fragment> pileFragment ;
+    private ArrayList<Livre> livre_affiche;
+    private ListView listView;
+    public static Stack<Fragment> pileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         init_data();
 
+        setAlarmeNotifications() ;
 
+        pileFragment = new Stack<Fragment>();
 
-        pileFragment =new Stack<Fragment>() ;
         super.onCreate(savedInstanceState);
+
         isPhone(this);
+
         isLand();
         if (fragmentListeLivres != null && !isPhone) {
             fragmentManager.beginTransaction()
@@ -79,8 +87,6 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         }
 
         setContentView(R.layout.activity_liste_livres);
-
-
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -169,8 +175,25 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
             } catch (NullPointerException e) {
 
             }
-
         }
+
+/*        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                searchView.setVisibility(View.INVISIBLE);
+                //     searchView.setVisibility(View.VISIBLE);
+                return false;
+            }
+
+        });*/
 
         // gérer les évenements
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
@@ -182,42 +205,55 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         else{
             Log.e("pas ","search pas null") ;
         }*/
-       //searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
     }
 
-    public ArrayList<Livre> filtredListBooks(String query){
+    public ArrayList<Livre> filtredListBooks(String query) {
         ArrayList<Livre> filtredList = new ArrayList<Livre>();
-        livre_affiche = ListeLivresFragement.livre_affiche ;
-        if(livre_affiche==null){
-            Log.e("null","livreaffiche null") ;
+        livre_affiche = ListeLivresFragement.livre_affiche;
+        if (livre_affiche == null) {
+            Log.e("null", "livreaffiche null");
         }
-        for (int i=0;i<livre_affiche.size();i++){
-            if (livre_affiche.get(i).rechercheMotsClés(query)) filtredList.add(livre_affiche.get(i));
+        for (int i = 0; i < livre_affiche.size(); i++) {
+            if (livre_affiche.get(i).rechercheMotsClés(query))
+                filtredList.add(livre_affiche.get(i));
         }
         return filtredList;
     }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
+
+        searchView.onActionViewCollapsed();
+        searchView.setQuery("", false);
+    //    searchView.setIconified(true);
 
         ArrayList<Livre> list = filtredListBooks(query);
         if(list.isEmpty()){
             new GetLivresByQueryTask(this,listView,query).execute() ;
         }
-        LivreAdapter monAdapteteur = new LivreAdapter(this,R.layout.liste_livres_range,list);
-        listView = ListeLivresFragement.listLivreView ;
-        listView.setAdapter(monAdapteteur);
-       // listView.setOnItemClickListener(this);
+        else {
+            LivreAdapter monAdapteteur = new LivreAdapter(this,R.layout.liste_livres_range,list);
+            listView = ListeLivresFragement.listLivreView ;
+            listView.setAdapter(monAdapteteur);
+            // listView.setOnItemClickListener(this);
+        }
+
+        onBackPressed();
+
         return false;
+
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
 
         ArrayList<Livre> list = filtredListBooks(newText);
-        LivreAdapter monAdapteteur = new LivreAdapter(this,R.layout.liste_livres_range,list);
-        listView = ListeLivresFragement.listLivreView ;
+        LivreAdapter monAdapteteur = new LivreAdapter(this, R.layout.liste_livres_range, list);
+        listView = ListeLivresFragement.listLivreView;
         listView.setAdapter(monAdapteteur);
         return false;
+
     }
 
     /**
@@ -239,54 +275,64 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
     private void displayView(int position) {
         // update the main content by replacing fragments
         fragmentListeLivres = null;
+
         Bundle bundle = new Bundle();
-        switch (position) {
-            case 0:
-                bundle.putString("categ", "0");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-
-                //fragmentListeLivres = new AccueilFragement();
-                break;
-            case 1:
-                bundle.putString("categ", "1");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-                break;
-            case 2:
-                bundle.putString("categ", "2");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-                break;
-            case 3:
-                bundle.putString("categ", "3");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-                break;
-            case 4:
-                bundle.putString("categ", "4");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-                break;
-            case 5:
-                bundle.putString("categ", "5");
-                fragmentListeLivres = new ListeLivresFragement();
-                fragmentListeLivres.setArguments(bundle);
-                break;
-            case 6:
-              new LogOutTask(this).execute() ;
-                break;
-
-            default:
-                break;
+        if(this.getIntent().getStringExtra("gson")!=null ){
+            bundle.putString("categ", "-1");
+            bundle.putString("gson", this.getIntent().getStringExtra("gson"));
+            fragmentListeLivres = new ListeLivresFragement();
+            fragmentListeLivres.setArguments(bundle) ;
+            this.getIntent().removeExtra("gson");
         }
+        else{
+            switch (position) {
+                case 0:
+                    bundle.putString("categ", "0");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle) ;
+                    //fragmentListeLivres = new AccueilFragement();
+                    break;
+                case 1:
+                    bundle.putString("categ", "1");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle);
+                    break;
+                case 2:
+                    bundle.putString("categ", "2");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle);
+                    break;
+                case 3:
+                    bundle.putString("categ", "3");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle);
+                    break;
+                case 4:
+                    bundle.putString("categ", "4");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle);
+                    break;
+                case 5:
+                    bundle.putString("categ", "5");
+                    fragmentListeLivres = new ListeLivresFragement();
+                    fragmentListeLivres.setArguments(bundle);
+                    break;
+                case 6:
+                    new LogOutTask(this).execute() ;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
 
         if (fragmentListeLivres != null) {
             // FragmentManager fragmentManager = getFragmentManager() ;
             //  FragmentManager fragmentManager = getFragmentManager();
             //  FragmentManager fragmentManager = getFragmentManager();
             livre_affiche = ListeLivresFragement.livre_affiche ;
-          listView = ListeLivresFragement.listLivreView ;
+            listView = ListeLivresFragement.listLivreView ;
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragmentListeLivres).commit();
 
@@ -310,15 +356,41 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         }
     }
 
+
+    public void  setAlarmeNotifications(){
+
+        AlarmManager manager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 19);
+        calendar.set(Calendar.MINUTE, 37);
+        Intent intent=new Intent("dz.intent.notif");
+        PendingIntent pendingIntent= PendingIntent.getBroadcast(this, 0, intent, 0);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),10000,pendingIntent);
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.menu_liste_livres, menu);
-        SearchManager searchManager = (SearchManager) getSystemService( Context.SEARCH_SERVICE );
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    searchView.onActionViewCollapsed();
+                    searchView.setQuery("", false);
+                //    searchView.setIconified(true);
+                }
+            }
+        });
         searchView.setOnQueryTextListener(this);
+
+
         searchView.setQueryHint("Titre,Auteur,Tages");
 
         return super.onCreateOptionsMenu(menu);
@@ -333,10 +405,20 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
             }
         }
 
+        searchView.onActionViewCollapsed();
+        searchView.setQuery("", false);
+    //    searchView.setIconified(true);
         // Handle action bar actions click
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case android.R.id.home:
+                if (canReturn)
+                    onBackPressed();
+                // mDrawerToggle.syncState();
                 return true;
+
+            case R.id.action_search :
+                searchView.onActionViewExpanded();
+                return true ;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -350,7 +432,10 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
         // if nav drawer is opened, hide the action items
 /* phone        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen); */
-        return super.onPrepareOptionsMenu(menu);
+     /*   searchView.onActionViewCollapsed();
+        searchView.setQuery("", false);
+        searchView.setIconified(true);
+       */ return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -400,21 +485,46 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
 
     @Override
     public void onBackPressed() {
-        if ( !pileFragment.isEmpty() && pileFragment.pop()!=null) {
+
+        if (!pileFragment.isEmpty() && pileFragment.pop() != null) {
+           /* searchView.setQuery("", true);
+            searchView.clearFocus();
+*/
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragmentListeLivres).commit();
 
         } else {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_drawer);
+            canReturn = false;
             super.onBackPressed();
         }
     }
-    public  void init_data(){
-        DataBaseSQLiteHandler dbh=new DataBaseSQLiteHandler(this) ;
-        ListeLivresFragement.livre_math =dbh.getLivresByCateg("Mathématique") ;
-        ListeLivresFragement.livre_elec =dbh.getLivresByCateg("Electronique") ;
-        ListeLivresFragement.livre_algo =dbh.getLivresByCateg("Algorithmique") ;
-        ListeLivresFragement.livre_base =dbh.getLivresByCateg("Base de donnée") ;
-        ListeLivresFragement.livre_si =dbh.getLivresByCateg("Système d'information") ;
+
+    public void init_data() {
+        DataBaseSQLiteHandler dbh = new DataBaseSQLiteHandler(this);
+        ListeLivresFragement.livre_math = dbh.getLivresByCateg("Mathématique");
+        ListeLivresFragement.livre_elec = dbh.getLivresByCateg("Electronique");
+        ListeLivresFragement.livre_algo = dbh.getLivresByCateg("Algorithmique");
+        ListeLivresFragement.livre_base = dbh.getLivresByCateg("Base de donnée");
+        ListeLivresFragement.livre_si = dbh.getLivresByCateg("Système d'information");
     }
+
+
+    @Override
+    public void showDrawerToggle(boolean showDrawerToggle) {
+
+        if (showDrawerToggle == false) {
+            mDrawerToggle.setDrawerIndicatorEnabled(showDrawerToggle);
+            mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            canReturn = true;
+        } else {
+            mDrawerToggle.setDrawerIndicatorEnabled(showDrawerToggle);
+            mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_drawer);
+            canReturn = false;
+
+        }
+    }
+
 
 }
