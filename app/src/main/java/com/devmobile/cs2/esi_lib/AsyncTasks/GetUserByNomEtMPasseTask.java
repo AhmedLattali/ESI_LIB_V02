@@ -3,6 +3,7 @@ package com.devmobile.cs2.esi_lib.AsyncTasks;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -78,6 +79,7 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
 
         else{
             if(!s.equals("{}")){
+                saveUser("logedIn",true);
                 context.startActivity(intent);
 
                 // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
@@ -89,6 +91,19 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
             }
         }
         dialog.dismiss();
+    }
+
+
+
+    public void saveUser(String category, boolean valeur) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(category, valeur);
+
+        editor.commit();
+
     }
 
 

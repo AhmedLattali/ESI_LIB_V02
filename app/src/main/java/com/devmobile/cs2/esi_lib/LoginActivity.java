@@ -1,6 +1,7 @@
 package com.devmobile.cs2.esi_lib;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -16,25 +17,33 @@ import com.devmobile.cs2.esi_lib.AsyncTasks.GetUserByNomEtMPasseTask;
 
 public class LoginActivity extends FragmentActivity implements OnTabChangeListener, OnPageChangeListener {
 
-	private TabsPagerAdapter mAdapter;
+    private TabsPagerAdapter mAdapter;
     private ViewPager mViewPager;
     private TabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        if (getSavedUser("logedIn")) {
 
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+            Intent intent = new Intent(this, com.devmobile.cs2.esi_lib.ListeLivres.class);
+            startActivity(intent);
+            finish();
 
-        // Tab Initialization
-        initialiseTabHost();
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-        // Fragments and ViewPager Initialization
-       
-        
-        mViewPager.setAdapter(mAdapter);
-        mViewPager.setOnPageChangeListener(LoginActivity.this);
+        } else {
+            setContentView(R.layout.activity_login);
+
+            mViewPager = (ViewPager) findViewById(R.id.viewpager);
+
+            // Tab Initialization
+            initialiseTabHost();
+            mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+            // Fragments and ViewPager Initialization
+
+            mViewPager.setAdapter(mAdapter);
+            mViewPager.setOnPageChangeListener(LoginActivity.this);
+
+        }
     }
 
     // Method to add a TabHost
@@ -61,10 +70,10 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
     }
 
     @Override
-        public void onPageSelected(int arg0) {
+    public void onPageSelected(int arg0) {
     }
 
-  
+
     // Tabs Creation
     private void initialiseTabHost() {
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -77,14 +86,21 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
 
         mTabHost.setOnTabChangedListener(this);
     }
-    public void onClickLogin(View v){
 
-      String pseudo = ((EditText) findViewById(R.id.editText)).getText().toString() ;
-        String mot_de_passe =  ((EditText) findViewById(R.id.editText2)).getText().toString() ;
-        Intent intent=new Intent(this,com.devmobile.cs2.esi_lib.ListeLivres.class);
-        GetUserByNomEtMPasseTask auth = new GetUserByNomEtMPasseTask(this,intent , pseudo, mot_de_passe) ;
-        auth.execute() ;
+    public void onClickLogin(View v) {
+
+        String pseudo = ((EditText) findViewById(R.id.editText)).getText().toString();
+        String mot_de_passe = ((EditText) findViewById(R.id.editText2)).getText().toString();
+        Intent intent = new Intent(this, com.devmobile.cs2.esi_lib.ListeLivres.class);
+        GetUserByNomEtMPasseTask auth = new GetUserByNomEtMPasseTask(this, intent, pseudo, mot_de_passe);
+        finish();
+        auth.execute();
         //startActivity(intent);
+    }
+
+    public boolean getSavedUser(String category) {
+
+        return getBaseContext().getSharedPreferences("User", Context.MODE_PRIVATE).getBoolean(category, false);
     }
 
 }
