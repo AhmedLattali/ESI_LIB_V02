@@ -151,6 +151,7 @@ public class ListeLivresFragement extends Fragment  {
             bundle.putString("annee", livre_affiche.get(position).getAnnee());
             bundle.putString("description", livre_affiche.get(position).getDescription());
             bundle.putInt("id", livre_affiche.get(position).getId());
+            bundle.putFloat("rating",livre_affiche.get(position).getRating());
             ListeLivres.fragmentDetailLivre = new DetailLivreFragement();
             ListeLivres.fragmentDetailLivre.setArguments(bundle);
             if (ListeLivres.fragmentDetailLivre != null) {

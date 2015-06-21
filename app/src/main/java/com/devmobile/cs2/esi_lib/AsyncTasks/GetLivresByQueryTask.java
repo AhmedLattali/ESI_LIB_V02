@@ -49,7 +49,7 @@ public class GetLivresByQueryTask extends AsyncTask<Void, Void, String> {
         //Emulateur
         String url = null;
         try {
-            url = "http://192.168.1.2:8080/getlivresbyquery?query='" + URLEncoder.encode(query, "UTF-8") + "'";
+            url = "http://10.0.2.144:8080/getlivresbyquery?query='" + URLEncoder.encode(query, "UTF-8") + "'";
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

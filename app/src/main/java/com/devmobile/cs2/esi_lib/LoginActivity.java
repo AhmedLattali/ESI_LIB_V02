@@ -31,6 +31,7 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
             finish();
 
         } else {
+
             setContentView(R.layout.activity_login);
 
             mViewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -102,5 +103,9 @@ public class LoginActivity extends FragmentActivity implements OnTabChangeListen
 
         return getBaseContext().getSharedPreferences("User", Context.MODE_PRIVATE).getBoolean(category, false);
     }
+
+
+
+
 
 }

@@ -361,13 +361,14 @@ public class ListeLivres extends ActionBarActivity implements SearchView.OnQuery
 
         AlarmManager manager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 19);
-        calendar.set(Calendar.MINUTE, 37);
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 49);
         Intent intent=new Intent("dz.intent.notif");
         PendingIntent pendingIntent= PendingIntent.getBroadcast(this, 0, intent, 0);
         manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),10000,pendingIntent);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

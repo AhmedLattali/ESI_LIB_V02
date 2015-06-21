@@ -1,7 +1,6 @@
 package com.devmobile.cs2.esi_lib;
 
 
-import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -13,33 +12,24 @@ import android.support.v4.app.NotificationCompat;
 
 import com.devmobile.cs2.esi_lib.AsyncTasks.GetNewLivresTask;
 
-import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Oo on 20/05/2015.
  */
+
 public class ServiceTest extends BroadcastReceiver{
-
-
 
     @Override
     public void onReceive(Context context, Intent intent){
 
-
-        if(intent.getAction().equals("android.permission.RECEIVE_BOOT_COMPLETED")){
-            AlarmManager manager=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-            Calendar calendar=Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY,00);
-            calendar.set(Calendar.MINUTE,33);
-            Intent intent2=new Intent("dz.intent.notif");
-            PendingIntent pendingIntent=PendingIntent.getBroadcast(context,0,intent2,0);
-            manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),10000,pendingIntent);
-
-        }
         String resultat="" ;
         try {
+
+            // verfier s'il ya du nouveau livres ;
             resultat = new GetNewLivresTask(context, "admin").execute().get() ;
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -47,7 +37,7 @@ public class ServiceTest extends BroadcastReceiver{
         }
         if(!resultat.equals("") && !resultat.equals("[]")){
 
-                notification(context,resultat );
+            notification(context,resultat );
         }
 
 
@@ -55,13 +45,12 @@ public class ServiceTest extends BroadcastReceiver{
     private void notification(Context context, String gson){
         Intent intent = new Intent(context, ListeLivres.class);
         intent.putExtra("gson",gson) ;
-         PendingIntent pendingIntent= PendingIntent.getActivity(context,0,intent,0);
+        PendingIntent pendingIntent= PendingIntent.getActivity(context,0,intent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         //long[] pattern = {500,500,500,1000};
         //builder.setVibrate(pattern);
         Uri alarm = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         builder.setSound(alarm);
-       // builder.setLargeIcon(image) ;
 
         builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setContentTitle("  Nouveaux livres   ");

@@ -11,7 +11,7 @@
     <dimen name="AuteurLivreSize">14sp</dimen>
     <dimen name="infoSize">16sp</dimen>
     <dimen name="descriptionSize">14sp</dimen>
-    <dimen name="editTextSize">10sp</dimen>
+    <dimen name="editTextSize">12sp</dimen>
     <dimen name="nomCommentaireSize">15sp</dimen>
     <dimen name="dateCommentaireSize">12sp</dimen>
     <dimen name="commentaireSize">13sp</dimen>

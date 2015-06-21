@@ -33,7 +33,7 @@ public class RatingTask extends AsyncTask<Void,Void,String> {
     @Override
     protected String doInBackground(Void... params) {
 
-        String url ="http://192.168.1.2:8080/rateLivre?"+query ;
+        String url ="http://10.0.2.144:8080/rateLivre?"+query ;
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
         String resultat ="" ;

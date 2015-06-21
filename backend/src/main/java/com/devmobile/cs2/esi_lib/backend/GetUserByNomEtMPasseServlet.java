@@ -20,7 +20,8 @@ public class GetUserByNomEtMPasseServlet extends HttpServlet{
         String nom = req.getParameter("nom") ;
         String passe = req.getParameter("passe") ;
         User user =dataBase.getUserByNomEtMpasse(nom,passe) ;
+
         Gson gson =new Gson() ;
-        resp.getWriter().print(gson.toJson(user)) ;
+        resp.getWriter().print(gson.toJson(user+" "+nom+" "+passe)) ;
     }
 }

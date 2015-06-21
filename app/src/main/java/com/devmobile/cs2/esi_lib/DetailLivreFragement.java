@@ -50,6 +50,7 @@ public class DetailLivreFragement extends Fragment  {
     ScrollView scrollView;
     ImageButton ajouterCommentaire;
     Button ratingButton;
+    private float rating;
 
     public DetailLivreFragement() {
         // Required empty public constructor
@@ -75,6 +76,7 @@ public class DetailLivreFragement extends Fragment  {
             annee = getArguments().getString("annee");
             description = getArguments().getString("description");
             id = getArguments().getInt("id");
+            rating = getArguments().getFloat("rating");
             commentaire = (EditText) v.findViewById(R.id.commentaire);
             scrollView = (ScrollView) v.findViewById(R.id.scrollView);
             /// Affichage du data sur l'interface
@@ -102,6 +104,7 @@ public class DetailLivreFragement extends Fragment  {
             categorieLivre.setText(categorie);
             anneLivre.setText(annee);
             descriptionLivre.setText(description);
+            ratingBar.setRating(rating);
 
             listCommentaire = (LinearLayout) v.findViewById(R.id.listCommentaire);
 

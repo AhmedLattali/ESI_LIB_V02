@@ -39,7 +39,7 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... params) {
         //Emulateur
 
-        String url ="http://192.168.1.2:8080/getuserbynometmpasse?nom='"+nom+"'"+"&passe='"+mot_de_passe+"'";
+        String url ="http://10.0.2.144:8080/getuserbynometmpasse?nom='"+nom+"'"+"&passe='"+mot_de_passe+"'";
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
         String resultat ="{}" ;
@@ -65,7 +65,7 @@ public class GetUserByNomEtMPasseTask extends AsyncTask<Void,Void,String> {
     protected void onPreExecute() {
         dialog = new ProgressDialog(context);
         dialog.setMessage(" Connection en cours ...");
-        dialog.show();
+//        dialog.show();
     }
 
     @Override

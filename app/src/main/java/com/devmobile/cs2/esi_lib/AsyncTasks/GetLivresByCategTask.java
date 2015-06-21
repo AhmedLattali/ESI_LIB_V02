@@ -15,53 +15,48 @@ import java.io.IOException;
 /**
  * Created by Ahmed-PC on 22-05-2015.
  */
-public class GetLivresByCategTask extends AsyncTask<Void,Void,String>{
+public class GetLivresByCategTask extends AsyncTask<Void, Void, String> {
 
-
-        private Context context ;
-        private String categ ;
+    private Context context;
+    private String categ;
     String httpcode;
-        public GetLivresByCategTask(Context context, String categ){
-            this.context=context ;
-            this.categ=categ ;
+
+    public GetLivresByCategTask(Context context, String categ) {
+        this.context = context;
+        this.categ = categ;
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
+        //Emulateur
+        String url = "http://10.0.2.144:8080/getlivrebycateg?categ='" + categ + "'";
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+        String resultat = "aa";
+        try {
+            HttpResponse httpResponse = httpClient.execute(httpGet);
+            httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString();
+            resultat = EntityUtils.toString(httpResponse.getEntity());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultat;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+
+        if (httpcode == null || !httpcode.equals("200")) {
+            Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
+        } else {
+            if (!s.equals("{}")) {
+
+                // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(context, "Pas de resultat", Toast.LENGTH_LONG).show();
+
+            }
         }
 
-
-        @Override
-        protected String doInBackground(Void... params) {
-            //Emulateur
-            String url ="http://192.168.1.2:8080/getlivrebycateg?categ='"+categ+"'" ;
-            HttpClient httpClient =new DefaultHttpClient() ;
-            HttpGet httpGet = new HttpGet(url) ;
-            String resultat ="aa" ;
-            try {
-                HttpResponse httpResponse = httpClient.execute(httpGet) ;
-                httpcode = ((Integer) httpResponse.getStatusLine().getStatusCode()).toString() ;
-                resultat= EntityUtils.toString(httpResponse.getEntity()) ;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return resultat ;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            if(httpcode==null || !httpcode.equals("200")){
-                Toast.makeText(context, "Impossible d'établir une connection", Toast.LENGTH_LONG).show();
-            }
-
-            else{
-                if(!s.equals("{}")){
-
-                    // Toast.makeText(context, "true", Toast.LENGTH_LONG).show();
-                }
-
-                else{
-                    Toast.makeText(context, "Pas de resultat", Toast.LENGTH_LONG).show();
-
-                }
-            }
-
-        }
+    }
 }

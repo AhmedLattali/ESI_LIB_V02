@@ -34,7 +34,7 @@ public class GetNewLivresTask extends AsyncTask<Void,Void,String> {
     protected String doInBackground(Void... params) {
         //Emulateur
 
-        String url ="http://192.168.1.2:8080/getnewlivres?user='"+user+"'";
+        String url ="http://10.0.2.144:8080/getnewlivres?user='"+user+"'";
         HttpClient httpClient =new DefaultHttpClient() ;
         HttpGet httpGet = new HttpGet(url) ;
         String resultat ="" ;
